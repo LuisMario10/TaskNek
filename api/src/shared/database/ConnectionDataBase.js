@@ -1,22 +1,14 @@
 import mysql from 'mysql'
 
-export const configDataBase = {
-    host: 'localhost',
-    port: '3306',
-    user: 'root',
-    password: '',
-    database: 'tasknek'
-}
-
 const connection = mysql.createConnection(
     {
-        host: configDataBase.host,
-        port: configDataBase.port,
-        user: configDataBase.user,
-        password: configDataBase.password,
-        database: configDataBase.database
+        host: process.env.HOST,
+        port: process.env.PORT,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE
     }
-)
+);
 /**
  * Execute code SQL
  * @param {strung} sql code SQL
@@ -24,7 +16,7 @@ const connection = mysql.createConnection(
  * @param {string} mensage return of the result query
  * @returns  Promise with data requests or error
  */
-export function requestInDataBase(sql, values="", mensage) {
+export function makeQuery(sql, values = "", mensage) {
     return new Promise((resolve, reject) => {
         connection.query(
             sql, 
